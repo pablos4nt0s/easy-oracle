@@ -1,4 +1,4 @@
-# easy-oracle [![Build Status](https://travis-ci.org/sorocred/easy-oracle.svg?branch=master)](https://travis-ci.org/sorocred/easy-oracle)
+# easy-oracle
 
 A simplified API for faster development using capabilities of [oracledb](https://www.npmjs.com/package/oracledb).
 
