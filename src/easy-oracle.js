@@ -20,10 +20,9 @@ import oracledb from 'oracledb';
  */
 const query = async (sql, params = [], maxRows = 100) => {
   let conn;
-  let result;
   try {
     conn = await oracledb.getConnection();
-    const execution = await conn.execute(
+    const result = await conn.execute(
       sql,
       params,
       {
@@ -31,13 +30,13 @@ const query = async (sql, params = [], maxRows = 100) => {
         maxRows,
       },
     );
-    result = execution.rows;
-    await conn.close();
+    return result.rows;
   } catch (e) {
     e.messsage = e;
     throw e;
+  } finally {
+    await conn.close();
   }
-  return result;
 };
 
 /**
@@ -56,12 +55,11 @@ const query = async (sql, params = [], maxRows = 100) => {
  */
 const queryResultSet = async (sql, params = []) => {
   let conn;
-  let result;
   try {
     conn = await oracledb.getConnection();
-    const execution = await conn.execute(
-            sql,
-            params,
+    const result = await conn.execute(
+      sql,
+      params,
       {
         outFormat: oracledb.OBJECT,
         resultSet: true,
@@ -69,18 +67,20 @@ const queryResultSet = async (sql, params = []) => {
     );
 
     const retval = [];
-    let row = await execution.resultSet.getRow();
+    let row = await result.resultSet.getRow();
     while (row) {
       retval.push(row);
-      row = await execution.resultSet.getRow();
+      row = await result.resultSet.getRow();
     }
-    result = retval;
-    await conn.close();
+    return retval;
   } catch (e) {
     e.messsage = e;
     throw e;
+  } finally {
+    if (conn) {
+      await conn.close();
+    }
   }
-  return result;
 };
 
 /**
@@ -102,20 +102,19 @@ const queryResultSet = async (sql, params = []) => {
  */
 const procedure = async (sql, bindvars) => {
   let conn;
-  let result;
   try {
     conn = await oracledb.getConnection();
-    const execution = await conn.execute(
-            `BEGIN ${sql}; END;`,
-            bindvars,
-        );
-    result = execution.outBinds;
-    await conn.close();
+    const result = await conn.execute(
+        `BEGIN ${sql}; END;`,
+        bindvars,
+    );
+    return result.outBinds;
   } catch (e) {
     e.messsage = e;
     throw e;
+  } finally {
+    await conn.close();
   }
-  return result;
 };
 
 /**
@@ -134,12 +133,11 @@ const procedure = async (sql, bindvars) => {
  */
 const tableFunction = async (sql, params = []) => {
   let conn;
-  let result;
   try {
     conn = await oracledb.getConnection();
-    const execution = await conn.execute(
-            `select * from table(${sql})`,
-            params,
+    const result = await conn.execute(
+      `select * from table(${sql})`,
+      params,
       {
         outFormat: oracledb.OBJECT,
         resultSet: true,
@@ -147,18 +145,20 @@ const tableFunction = async (sql, params = []) => {
     );
 
     const retval = [];
-    let row = await execution.resultSet.getRow();
+    let row = await result.resultSet.getRow();
     while (row) {
       retval.push(row);
-      row = await execution.resultSet.getRow();
+      row = await result.resultSet.getRow();
     }
-    result = retval;
-    await conn.close();
+    return retval;
   } catch (e) {
     e.messsage = e;
     throw e;
+  } finally {
+    if (conn) {
+      await conn.close();
+    }
   }
-  return result;
 };
 
 module.exports = { query, queryResultSet, procedure, tableFunction, oracledb };
