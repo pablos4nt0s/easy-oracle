@@ -1,6 +1,6 @@
 {
   "name": "easy-oracle",
-  "version": "1.0.2",
+  "version": "1.0.1",
   "description": "A simplified API for faster development using capabilities of oracledb.",
   "main": "./lib/easy-oracle.js",
   "scripts": {
