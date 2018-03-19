@@ -35,7 +35,9 @@ const query = async (sql, params = [], maxRows = 100) => {
     e.messsage = e;
     throw e;
   } finally {
-    await conn.close();
+    if (conn) {
+      await conn.close();
+    }
   }
 };
 
@@ -113,7 +115,9 @@ const procedure = async (sql, bindvars) => {
     e.messsage = e;
     throw e;
   } finally {
-    await conn.close();
+    if (conn) {
+      await conn.close();
+    }
   }
 };
 
