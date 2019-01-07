@@ -16,12 +16,13 @@ import oracledb from 'oracledb';
  * @param {string} sql O comando SQL a ser executado.
  * @param {Object|Array<any>} params Um Object/Array com as varíaveis de bind.
  * @param {number} maxRows Quantidade máxima de linhas retornadas. Default: 100.
+ * @param {string} poolAlias Alias para a conexão do banco (se diferente da padrão).
  * @returns Um resultado contendo as linhas retornadas.
  */
-const query = async (sql, params = [], maxRows = 100) => {
+const query = async (sql, params = [], maxRows = 100, poolAlias = 'default') => {
   let conn;
   try {
-    conn = await oracledb.getConnection();
+    conn = await oracledb.getConnection(poolAlias);
     const result = await conn.execute(
       sql,
       params,
@@ -53,12 +54,13 @@ const query = async (sql, params = [], maxRows = 100) => {
  *
  * @param {string} sql O comando SQL a ser executado.
  * @param {Object|Array<any>} params Um Object/Array com as varíaveis de bind.
+ * @param {string} poolAlias Alias para a conexão do banco (se diferente da padrão).
  * @returns Um resultado contendo as linhas retornadas.
  */
-const queryResultSet = async (sql, params = []) => {
+const queryResultSet = async (sql, params = [], poolAlias = 'default') => {
   let conn;
   try {
-    conn = await oracledb.getConnection();
+    conn = await oracledb.getConnection(poolAlias);
     const result = await conn.execute(
       sql,
       params,
@@ -100,12 +102,13 @@ const queryResultSet = async (sql, params = []) => {
  * }
  * @param {string} sql nome do procedimento e seus parâmetros de entrada, saída ou entrada e saída.
  * @param {Object|Array<any>} bindvars Um Object/Array com as varíaveis de bind IN, OUT ou IN OUT.
+ * @param {string} poolAlias Alias para a conexão do banco (se diferente da padrão).
  * @returns Um resultado contendo os valores de quaisquer varíaveis de bind OUT e IN OUT.
  */
-const procedure = async (sql, bindvars) => {
+const procedure = async (sql, bindvars, poolAlias = 'default') => {
   let conn;
   try {
-    conn = await oracledb.getConnection();
+    conn = await oracledb.getConnection(poolAlias);
     const result = await conn.execute(
         `BEGIN ${sql}; END;`,
         bindvars,
@@ -133,12 +136,13 @@ const procedure = async (sql, bindvars) => {
  *
  * @param {string} sql O comando SQL a ser executado.
  * @param {Object|Array<any>} params Um Object/Array com as varíaveis de bind.
+ * @param {string} poolAlias Alias para a conexão do banco (se diferente da padrão).
  * @returns Um resultado contendo as linhas retornadas.
  */
-const tableFunction = async (sql, params = []) => {
+const tableFunction = async (sql, params = [], poolAlias = 'default') => {
   let conn;
   try {
-    conn = await oracledb.getConnection();
+    conn = await oracledb.getConnection(poolAlias);
     const result = await conn.execute(
       `select * from table(${sql})`,
       params,
