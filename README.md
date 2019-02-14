@@ -26,7 +26,7 @@ $ npm install --save easy-oracle
 To view the examples, clone the repo and install the dependencies:
 
 ```js
-$ git clone git://github.com/sorocred/easy-oracle.git
+$ git clone git://github.com/rectius/easy-oracle.git
 $ cd easy-oracle
 $ npm install
 ```
@@ -44,7 +44,7 @@ $ npm run test
 
 The current lead maintainer is [Pablo Souza](https://github.com/rectius)
 
-[List of all contributors](https://github.com/sorocred/easy-oracle/graphs/contributors)
+[List of all contributors](https://github.com/rectius/easy-oracle/graphs/contributors)
 
 ## License
 
