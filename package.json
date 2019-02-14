@@ -19,7 +19,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sorocred/easy-oracle.git"
+    "url": "git+https://github.com/rectius/easy-oracle.git"
   },
   "keywords": [
     "oracle",
@@ -28,9 +28,9 @@
   "author": "Pablo Souza <pablo@rectius.com.br>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/sorocred/easy-oracle/issues"
+    "url": "https://github.com/rectius/easy-oracle/issues"
   },
-  "homepage": "https://github.com/sorocred/easy-oracle#readme",
+  "homepage": "https://github.com/rectius/easy-oracle#readme",
   "devDependencies": {
     "babel": "^6.5.2",
     "babel-cli": "^6.14.0",
